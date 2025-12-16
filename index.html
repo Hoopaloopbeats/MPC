@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manitoba Producer Council</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05060a;
+      --bg-alt: #0f1117;
+      --bg-soft: #151822;
+      --fg: #f5f5f7;
+      --muted: #a4a8b6;
+      --accent: #00d4b4;
+      --accent-soft: rgba(0, 212, 180, 0.20);
+      --border-soft: #252838;
+      --card: #10121a;
+      --danger: #ff4f70;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #151822, #05060a 60%);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(5, 6, 10, 0.95), rgba(5, 6, 10, 0.88));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.9rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.4rem;
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 0.8rem; }
+
+    .nav-logo-mark {
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Playfair Display", serif;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      background: radial-gradient(circle at 30% 20%, #ffffff22, #00000000);
+    }
+
+    .nav-text {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .nav-text span:first-child { font-weight: 600; }
+    .nav-text span:last-child { color: var(--muted); font-weight: 400; }
+
+    nav ul { display: flex; gap: 1rem; list-style: none; font-size: 0.85rem; }
+
+    nav a {
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--fg);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta {
+      border-radius: 999px;
+      background: var(--accent);
+      color: #021310;
+      padding: 0.4rem 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.72rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.1s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      background: #33e4c6;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2rem 1.4rem 3.4rem;
+    }
+
+    section { margin-bottom: 2.8rem; }
+
+    #hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 2.1rem;
+      align-items: center;
+      margin-top: 1.4rem;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.18rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(45, 212, 191, 0.14);
+      border: 1px solid rgba(45, 212, 191, 0.5);
+      color: #a5f3fc;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-tag-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+    }
+
+    .hero-title span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.02rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+      max-width: 32rem;
+    }
+
+    .hero-points {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-points strong { color: var(--fg); font-weight: 500; }
+
+    .hero-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 1.05rem;
+    }
+
+    .hero-pill {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 0.25rem 0.9rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #021310;
+      font-weight: 600;
+      font-size: 0.86rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.1s ease;
+      margin-bottom: 0.45rem;
+    }
+
+    .hero-cta span { font-size: 0.9rem; }
+
+    .hero-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.7);
+      background: #33e4c6;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-visual { position: relative; }
+
+    .hero-card {
+      position: relative;
+      border-radius: 22px;
+      background: radial-gradient(circle at top left, #1f2937, #020617);
+      padding: 1.2rem 1.25rem 1.05rem;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.18), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.1rem;
+      align-items: center;
+    }
+
+    .hero-card-left h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-card-left h4 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.35rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .hero-card-left p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-tagline-small { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); text-align:center; display:block; margin-top:0.4rem; }
+
+    .hero-logo-shell {
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.96);
+      padding: 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .hero-logo-shell img {
+      max-width: 140px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.9));
+    }
+
+    .hero-logo-shell span {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .hero-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.15rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .hero-pill-mini {
+      border-radius: 999px;
+      padding: 0.16rem 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      max-width: 34rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      border: 1px solid var(--border-soft);
+      font-size: 0.94rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.1rem;
+    }
+
+    ul {
+      padding-left: 1.1rem;
+      margin-top: 0.35rem;
+      font-size: 0.93rem;
+    }
+
+    ul li + li { margin-top: 0.28rem; }
+
+    .values-list li {
+      list-style: none;
+      position: relative;
+      padding-left: 0.9rem;
+    }
+
+    .values-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent);
+    }
+
+    .membership-tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .tier {
+      border-radius: 11px;
+      border: 1px solid var(--border-soft);
+      padding: 0.8rem 0.9rem;
+      font-size: 0.9rem;
+      background: linear-gradient(to bottom right, #10121a, #05060a);
+    }
+
+    .tier h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.06rem 0.5rem;
+      border-radius: 999px;
+      background: #022c22;
+      color: #a5f3fc;
+      margin-left: 0.35rem;
+    }
+
+    .cta-box {
+      margin-top: 0.9rem;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      font-size: 0.9rem;
+      background: rgba(15, 23, 42, 0.86);
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 0.6rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #021310;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .cta-btn:hover { background: #33e4c6; }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 1.1rem 1.4rem 1.6rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 1.4rem;
+      background: linear-gradient(to top, #020617, transparent);
+    }
+
+    @media (max-width: 900px) {
+      #hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      header { position: static; }
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      nav ul { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <div class="nav-logo-mark">M</div>
+      <div class="nav-text">
+        <span>Manitoba Producer Council</span>
+        <span>For the Creators Behind the Sound</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#join">Join</a></li>
+      </ul>
+    </nav>
+    <button class="nav-cta" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'});">
+      Join Interest List
+    </button>
+  </div>
+</header>
+
+<main>
+  <section id="hero">
+    <div>
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        <span>New home for Manitoba’s producers</span>
+      </div>
+      <h1 class="hero-title"><span>Manitoba</span> Producer Council</h1>
+      <p class="hero-sub">
+        A quiet, serious home base for the people who build the sound:
+        beatmakers, producers, engineers, self-producing artists, and anyone shaping music in Manitoba.
+      </p>
+      <p class="hero-points">
+        <strong>MPC exists to support producers first</strong> —
+        with community, real opportunities, and a place where your work actually matters.
+      </p>
+
+      <div class="hero-row">
+        <div class="hero-pill">Producers First</div>
+        <div class="hero-pill">Independent &amp; Community-led</div>
+        <div class="hero-pill">Manitoba &amp; Beyond</div>
+      </div>
+
+      <button class="hero-cta" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'});">
+        Join the Interest List <span>→</span>
+      </button>
+      <div class="hero-note">
+        Membership tiers launch later — this stage is about building the right community first.
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-inner">
+          <div class="hero-card-left">
+            <h3>For the Creators Behind the Sound</h3>
+            <h4>Where Manitoba’s Music Makers Unite.</h4>
+            <p>
+              MPC is here for the producers who rarely get the spotlight, but
+              carry the weight of the record: arranging, sound design, mixes,
+              and the feel that makes songs work.
+            </p>
+            <div class="hero-tagline-small">
+              Advocacy • Community • Opportunity • Growth
+            </div>
+          </div>
+          <div class="hero-logo-shell">
+            <img src="mpc_logo.png" alt="Manitoba Producer Council logo" />
+            <span>Monogram Mark • MPC</span>
+            <div class="hero-pill-row">
+              <div class="hero-pill-mini">Hip Hop</div>
+              <div class="hero-pill-mini">Electronic</div>
+              <div class="hero-pill-mini">Indie &amp; Alt</div>
+              <div class="hero-pill-mini">Engineers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mission">
+    <h2>Mission &amp; Vision</h2>
+    <p class="section-intro">
+      MPC exists to give producers in Manitoba a home base — not just in name,
+      but in practice.
+    </p>
+    <div class="two-col">
+      <div class="card">
+        <h3>Mission</h3>
+        <p>
+          The Manitoba Producer Council supports and elevates the creators who
+          shape our province’s music. We help producers connect, learn, and
+          grow by offering community, resources, and opportunities tailored to
+          their craft.
+        </p>
+        <p>
+          Our mission is to strengthen Manitoba’s producer community and create
+          space where creativity, collaboration, and innovation can thrive.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Vision</h3>
+        <p>
+          A Manitoba where every producer — from emerging to established —
+          has access to a vibrant network, meaningful opportunities, and
+          pathways to develop their sound and career.
+        </p>
+        <p>
+          We see producers recognized as essential contributors to the
+          province’s creative landscape, not an afterthought.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="values">
+    <h2>Core Values</h2>
+    <p class="section-intro">
+      How MPC operates and what it stands on.
+    </p>
+    <div class="card">
+      <ul class="values-list">
+        <li><strong>Inclusivity</strong> – All genres, all backgrounds, all experience levels.</li>
+        <li><strong>Empowerment</strong> – Tools, knowledge, and support that actually move producers forward.</li>
+        <li><strong>Collaboration</strong> – Connecting producers with each other and with artists, studios, and opportunities.</li>
+        <li><strong>Innovation</strong> – Encouraging new ideas, new sounds, and new ways to work.</li>
+        <li><strong>Community</strong> – A space where producers can grow together instead of competing alone.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About MPC</h2>
+    <p class="section-intro">
+      A council built for producers first — not as a tagline, but as a practice.
+    </p>
+    <div class="two-col">
+      <div class="card">
+        <h3>Who We Are</h3>
+        <p>
+          The Manitoba Producer Council (MPC) is a community-focused initiative
+          dedicated to supporting producers across the province. We represent
+          beatmakers, electronic artists, engineers, self-producing musicians,
+          and creators of all kinds who work behind the music.
+        </p>
+        <p>
+          The goal is simple: build a serious, stable environment where
+          producers can improve their craft, collaborate without ego, and
+          access meaningful opportunities.
+        </p>
+      </div>
+      <div class="card">
+        <h3>What We Do</h3>
+        <ul>
+          <li><strong>Education &amp; Resources</strong> – Workshops, guides, and shared knowledge from working producers.</li>
+          <li><strong>Community &amp; Networking</strong> – Events, listening sessions, and spaces to connect.</li>
+          <li><strong>Opportunity Creation</strong> – Showcases, placements, collaborations, and strategic links.</li>
+          <li><strong>Support &amp; Guidance</strong> – Help navigating tools, funding routes, and the business side.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="join">
+    <h2>Join MPC</h2>
+    <p class="section-intro">
+      This phase is about building a core circle of serious producers who want
+      something better than what already exists.
+    </p>
+    <div class="card">
+      <h3>Why Become a Member?</h3>
+      <p>
+        Joining MPC puts you in a community that understands the work you do and
+        respects the craft. It’s not about clout — it’s about better records,
+        better infrastructure, and better support for the people behind the
+        sound.
+      </p>
+
+      <h3 style="margin-top:0.7rem;">Membership Benefits (Planned)</h3>
+      <ul>
+        <li>Producer-focused events and sessions</li>
+        <li>Workshops and skill development</li>
+        <li>Showcases and placement opportunities</li>
+        <li>Resource sharing and funding guidance</li>
+        <li>A network of like-minded producers</li>
+      </ul>
+
+      <h3 style="margin-top:0.7rem;">Who Can Join?</h3>
+      <p>
+        Any music creator who produces or shapes sound — in any genre, at any
+        stage of their journey.
+      </p>
+
+      <div class="membership-tiers">
+        <div class="tier">
+          <h3>Basic <span class="badge">Future</span></h3>
+          <p>Community access, updates, and general resources.</p>
+        </div>
+        <div class="tier">
+          <h3>Pro <span class="badge">Future</span></h3>
+          <p>Workshops, showcases, and deeper involvement.</p>
+        </div>
+        <div class="tier">
+          <h3>Advocate <span class="badge">Future</span></h3>
+          <p>Mentorship, leadership roles, and policy input.</p>
+        </div>
+      </div>
+
+      <div class="cta-box">
+        <p>
+          For now, this is a foundation stage. When you’re ready, plug in a
+          simple interest form here (Google Forms, Typeform, whatever you
+          choose) and start quietly collecting serious names.
+        </p>
+        <button class="cta-btn">
+          Join the Interest List
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Manitoba Producer Council • For the Creators Behind the Sound.
+</footer>
+</body>
+</html>
